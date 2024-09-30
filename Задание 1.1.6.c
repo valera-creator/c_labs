@@ -17,7 +17,15 @@ int main()
 		is_fool = scanf_s("%d", &n);
 		if (is_fool)
 		{
-			break;
+			if (n < 0)
+			{
+				printf("N не может быть отрицательным\n");
+			}
+			else 
+			{
+				break;
+			}
+			
 		}
 		else
 		{
