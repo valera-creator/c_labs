@@ -6,7 +6,7 @@ int main()
 {
 	int n, is_fool, summa = 0, count_elems = 0;
 	int left = -1, right = -1;
-	int *array;
+	int* array;
 	char buf_string;
 	setlocale(0, "");
 
@@ -17,15 +17,15 @@ int main()
 		is_fool = scanf_s("%d", &n);
 		if (is_fool)
 		{
-			if (n < 0)
+			if (n <= 0)
 			{
-				printf("N не может быть отрицательным\n");
+				printf("N должно быть больше 0\n");
 			}
-			else 
+			else
 			{
 				break;
 			}
-			
+
 		}
 		else
 		{
