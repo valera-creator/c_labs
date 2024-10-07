@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <locale.h>
 #include <stdlib.h>
+#define LEFT -5
+#define RIGHT 7
 
 int main()
 {
@@ -36,6 +38,13 @@ int main()
 	right = n - 1;
 	array = malloc(sizeof(int) * n);
 
+	// память не выделилась
+	if (array == NULL)
+	{
+		printf("память не выделилась");
+		return 0;
+	}
+
 	// заполнение массива
 	printf("Введите элементы массива\n");
 	for (int i = 0; i < n; i++)
@@ -60,7 +69,7 @@ int main()
 	// левая граница
 	for (int i = 0; i < n; i++)
 	{
-		if (-5 >= array[i] || array[i] >= 7)
+		if (LEFT >= array[i] || array[i] >= RIGHT)
 		{
 			left = i;
 			break;
