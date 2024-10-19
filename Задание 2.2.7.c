@@ -196,7 +196,7 @@ int main()
 		printf("измененная матрица\n");
 		print_matrix(matrix_b, N, M - 1);
 
-		// освобождение памяти
+		// освобождение памяти матрицы b
 		for (i = 0; i < N; i++)
 		{
 			free(matrix_b[i]);
@@ -204,7 +204,7 @@ int main()
 		free(matrix_b);
 	}
 
-	// освобождение памяти
+	// освобождение памяти матрицы a
 	for (i = 0; i < N; i++)
 	{
 		free(matrix_a[i]);
