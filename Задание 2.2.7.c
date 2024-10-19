@@ -40,6 +40,7 @@ void input_matrix(int arr[][MAX_COLS], int rows, int cols)
 	return;
 }
 
+
 void print_matrix(const int arr[][MAX_COLS], int rows, int cols)
 {
 	int i, j;
@@ -77,6 +78,7 @@ int get_correct_type_value()
 	}
 }
 
+
 int get_min_colum(const int arr[][MAX_COLS], int rows, int cols)
 {	
 	// вернет номер столбца, если найдется подходящий или вернет -1, если такого нет
@@ -102,7 +104,7 @@ int get_min_colum(const int arr[][MAX_COLS], int rows, int cols)
 }
 
 
-void filling_matrix(int arr_a[][MAX_COLS], int arr_b[][MAX_COLS], int rows, int cols, int del_col)
+void filling_matrix(const int arr_a[][MAX_COLS], int arr_b[][MAX_COLS], int rows, int cols, int del_col)
 {	
 	// is_del_col - флаг, примет значение 1, когда мы дошли до столбца, который не нужно записывать в матрицу b
 	int i, j, is_del_col = 0;
@@ -114,10 +116,12 @@ void filling_matrix(int arr_a[][MAX_COLS], int arr_b[][MAX_COLS], int rows, int 
 			{
 				is_del_col = 1;
 			}
+
 			else if (!is_del_col)
 			{
 				arr_b[i][j] = arr_a[i][j];
 			}
+
 			if (is_del_col)
 			{
 				arr_b[i][j] = arr_a[i][j + 1];
@@ -136,7 +140,7 @@ int main()
 
 	input_n_m(&N, &M);
 
-	// выделение памяти
+	// выделение памяти для матрицы a
 	matrix_a = (int**)malloc(sizeof(int*) * N); // под строки
 	if (matrix_a == NULL) // проверка, что не выделилась память
 	{
@@ -166,7 +170,7 @@ int main()
 
 	else
 	{
-		// выделение памяти
+		// выделение памяти для матрицы b
 		matrix_b = (int**)malloc(sizeof(int*) * N); // под строки
 		if (matrix_b == NULL) // проверка, что не выделилась память
 		{
@@ -198,7 +202,6 @@ int main()
 			free(matrix_b[i]);
 		}
 		free(matrix_b);
-
 	}
 
 	// освобождение памяти
