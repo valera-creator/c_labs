@@ -26,13 +26,13 @@ void input_n_m(int* N, int* M)
 }
 
 
-void input_matrix(int arr[][MAX_COLS], int rows, int cols)
+void input_matrix(int **arr, int rows, int cols)
 {
 	int i, j;
 	for (i = 0; i < rows; i++)
 	{
 		for (j = 0; j < cols; j++)
-		{	
+		{
 			printf("[%d][%d] = ", i, j);
 			arr[i][j] = get_correct_type_value();
 		}
@@ -41,7 +41,7 @@ void input_matrix(int arr[][MAX_COLS], int rows, int cols)
 }
 
 
-void print_matrix(const int arr[][MAX_COLS], int rows, int cols)
+void print_matrix(const int **arr, int rows, int cols)
 {
 	int i, j;
 	for (i = 0; i < rows; i++)
@@ -79,15 +79,15 @@ int get_correct_type_value()
 }
 
 
-int get_min_colum(const int arr[][MAX_COLS], int rows, int cols)
-{	
+int get_min_colum(const int **arr, int rows, int cols)
+{
 	// вернет номер столбца, если найдется подходящий или вернет -1, если такого нет
 	int i, j, is_ok = 1;
 	for (i = 0; i < cols; i++)
-	{	
+	{
 		is_ok = 1;
 		for (j = 0; j < rows - 1; j++)
-		{	
+		{
 			if (arr[j][i] % DIV == 0 || arr[j + 1][i] % DIV == 0 || arr[j][i] <= arr[j + 1][i])
 			{
 				is_ok = 0;
@@ -104,8 +104,8 @@ int get_min_colum(const int arr[][MAX_COLS], int rows, int cols)
 }
 
 
-void filling_matrix(const int arr_a[][MAX_COLS], int arr_b[][MAX_COLS], int rows, int cols, int del_col)
-{	
+void filling_matrix(const int **arr_a, int **arr_b, int rows, int cols, int del_col)
+{
 	// is_del_col - флаг, примет значение 1, когда мы дошли до столбца, который не нужно записывать в матрицу b
 	int i, j, is_del_col = 0;
 	for (i = 0; i < rows; i++)
@@ -135,7 +135,7 @@ void filling_matrix(const int arr_a[][MAX_COLS], int arr_b[][MAX_COLS], int rows
 
 int main()
 {
-	int i, j, N, M, min_col, ** matrix_a, **matrix_b;
+	int i, j, N, M, min_col, ** matrix_a, ** matrix_b;
 	setlocale(0, "");
 
 	input_n_m(&N, &M);
@@ -148,7 +148,7 @@ int main()
 		return 0;
 	}
 
-	for (j = 0; j < M; j++) // под столбцы
+	for (j = 0; j < N; j++) // под столбцы
 	{
 		matrix_a[j] = (int*)malloc(sizeof(int) * M);
 		if (matrix_a[j] == NULL) // проверка, что не выделилась память
@@ -178,9 +178,9 @@ int main()
 			return 0;
 		}
 
-		for (j = 0; j < M - 1; j++) // под столбцы
+		for (j = 0; j < N; j++) // под столбцы
 		{
-			matrix_b[j] = (int*)malloc(sizeof(int) * M);
+			matrix_b[j] = (int*)malloc(sizeof(int) * (M - 1));
 			if (matrix_b[j] == NULL) // проверка, что не выделилась память
 			{
 				printf("во время выделения памяти столбцов память не выделилась");
