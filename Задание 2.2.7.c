@@ -9,24 +9,24 @@ void input_n_m(int* N, int* M)
 {
 	printf("Введите N: ");
 	*N = get_correct_type_value();
-	while (*N > MAX_ROWS)
+	while (*N > MAX_ROWS || *N < 1)
 	{
-		printf("N должно быть не более %d\nВведите n заново", MAX_ROWS);
+		printf("N должно быть не менее 1 и не более %d\nВведите N заново ", MAX_ROWS);
 		*N = get_correct_type_value();
 	}
 
 	printf("Введите M: ");
 	*M = get_correct_type_value();
-	while (*M > MAX_COLS)
+	while (*M > MAX_COLS || *M < 1)
 	{
-		printf("m должно быть не более %d\nВведите n заново", MAX_COLS);
+		printf("M должно быть не менее 1 и не более %d\nВведите M заново ", MAX_COLS);
 		*M = get_correct_type_value();
 	}
 	return;
 }
 
 
-void input_matrix(int **arr, int rows, int cols)
+void input_matrix(int** arr, int rows, int cols)
 {
 	int i, j;
 	for (i = 0; i < rows; i++)
@@ -41,7 +41,7 @@ void input_matrix(int **arr, int rows, int cols)
 }
 
 
-void print_matrix(const int **arr, int rows, int cols)
+void print_matrix(const int** arr, int rows, int cols)
 {
 	int i, j;
 	for (i = 0; i < rows; i++)
@@ -79,7 +79,7 @@ int get_correct_type_value()
 }
 
 
-int get_min_colum(const int **arr, int rows, int cols)
+int get_min_colum(const int** arr, int rows, int cols)
 {
 	// вернет номер столбца, если найдется подходящий или вернет -1, если такого нет
 	int i, j, is_ok = 1;
@@ -104,7 +104,7 @@ int get_min_colum(const int **arr, int rows, int cols)
 }
 
 
-void filling_matrix(const int **arr_a, int **arr_b, int rows, int cols, int del_col)
+void filling_matrix(const int** arr_a, int** arr_b, int rows, int cols, int del_col)
 {
 	// is_del_col - флаг, примет значение 1, когда мы дошли до столбца, который не нужно записывать в матрицу b
 	int i, j, is_del_col = 0;
