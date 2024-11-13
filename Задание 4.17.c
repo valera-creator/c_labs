@@ -8,6 +8,34 @@ struct list
 	struct list* next;
 };
 
+int input_list(struct list** head, struct list** last, int* cnt_elems)
+{
+	int res, val;
+	char buf;
+	printf("ввод элементов списка будет происходить, пока не введено не число\n");
+	printf("введите 1-й элемент списка (число) или не число для прекращения ввода: ");
+	while (1)
+	{
+		res = scanf_s("%d", &val);
+		if (!res)
+		{
+			scanf_s("%c", &buf);
+			break;
+		}
+		else
+		{
+			(*cnt_elems)++;
+			if (!insert_end(val, head, last))
+			{
+				printf("ошибка выделения памяти");
+				return 0;
+			}
+			printf("введите %d-й элемент списка (число) или не число для прекращения ввода: ", (*cnt_elems) + 1);
+		}
+	}
+	return 1;
+}
+
 
 int insert_end(int val, struct list** head, struct list** last)
 {
@@ -70,36 +98,18 @@ void clear_list(struct list** head, struct list** last)
 int main()
 {
 	setlocale(0, "");
-	struct list* head, * last;
-	head = last = NULL;
-	int all_elems, res, val;
+	struct list* head_first, * last_first, *head_second, *last_second;
+	head_first = last_first = head_second = last_second = NULL;
 	int cnt_elems = 0;
-	char buf;
 	
-	printf("ввод элементов списка будет происходить, пока не введено не число\n");
-	printf("введите 1-й элемент списка (число) или не число для прекращения ввода: ");
-	while (1)
+	
+	if (!input_list(&head_first, &last_first, &cnt_elems)) // ошибка выделения памяти возникла
 	{
-		res = scanf_s("%d", &val);
-		if (!res)
-		{
-			scanf_s("%c", &buf);
-			break;
-		}
-		else
-		{
-			cnt_elems++;
-			if (!insert_end(val, &head, &last))
-			{
-				printf("ошибка выделения памяти");
-				return 0;
-			}
-			printf("введите %d-й элемент списка (число) или не число для прекращения ввода: ", cnt_elems + 1);
-		}
+		return 0;
 	}
 
-	print_list(&head);
-	clear_list(&head, &last);
+	print_list(&head_first);
+	clear_list(&head_first, &last_first);
 
 	return 0;
 }
