@@ -77,7 +77,23 @@ void print_list(struct list** head)
 		printf("%d ", cur->inf);
 		cur = cur->next;
 	}
+
 	return;
+}
+
+int write_elems_new_list(struct list** head_first, struct list** head_second, struct list** last_second, int cnt_elems)
+{
+	int i;
+	struct list* cur = (*head_first);
+
+	for (i = 0; i < cnt_elems; i++)
+	{
+		if (cur->inf > i + 1)
+		{
+			printf("%d > %d ", cur->inf, i + 1); // перезаписать указателями новый элемент
+		}
+		cur = cur->next;
+	}
 }
 
 void clear_list(struct list** head, struct list** last)
@@ -109,6 +125,7 @@ int main()
 	}
 
 	print_list(&head_first);
+	write_elems_new_list(&head_first, &head_second, &last_second, cnt_elems);
 	clear_list(&head_first, &last_first);
 
 	return 0;
