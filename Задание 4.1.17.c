@@ -8,10 +8,11 @@ struct list
 	struct list* next;
 };
 
-int input_list(struct list** head, struct list** last, int* cnt_elems)
+int input_list(struct list** head, struct list** last)
 {
 	int res, val;
 	char buf;
+	int cnt_elems = 0;
 	printf("ввод элементов списка будет происходить, пока не введено не число\n");
 	printf("введите 1-й элемент списка (число) или не число для прекращения ввода: ");
 	while (1)
@@ -24,13 +25,13 @@ int input_list(struct list** head, struct list** last, int* cnt_elems)
 		}
 		else
 		{
-			(*cnt_elems)++;
+			cnt_elems++;
 			if (!insert_end(val, head, last))
 			{
 				printf("ошибка выделения памяти");
 				return 0;
 			}
-			printf("введите %d-й элемент списка (число) или не число для прекращения ввода: ", (*cnt_elems) + 1);
+			printf("введите %d-й элемент списка (число) или не число для прекращения ввода: ", cnt_elems + 1);
 		}
 	}
 	return 1;
@@ -81,18 +82,67 @@ void print_list(struct list** head)
 	return;
 }
 
-int write_elems_new_list(struct list** head_first, struct list** head_second, struct list** last_second, int cnt_elems)
+
+int write_elems_new_list(struct list** head_first, struct list** head_second, struct list** last_second)
 {
 	int i;
-	struct list* cur = (*head_first);
-
-	for (i = 0; i < cnt_elems; i++)
-	{
-		if (cur->inf > i + 1)
+	struct list* cur_first_list = (*head_first);
+	struct list* prev_first_list = (*head_first);
+	int cur_num_elems = 0;
+	
+	while (cur_first_list != NULL)
+	{	
+		cur_num_elems += 1;
+		if (cur_first_list->inf > cur_num_elems)
 		{
-			printf("%d > %d ", cur->inf, i + 1); // перезаписать указателями новый элемент
+			if (cur_first_list == (*head_first)) // если самый первый элемент из первого списка подошел
+			{	
+				if ((*head_second) == NULL) // если во втором списке еще ничего нет
+				{	
+					(*head_second) = (*head_first);
+					(*last_second) = (*head_first);
+					(*head_first) = (*head_first)->next;
+					prev_first_list = cur_first_list;
+					cur_first_list = cur_first_list->next;
+					(*head_second)->next = NULL;
+				}
+				else // если во втором списке уже что-то есть (на прошлом этапе из первого списка забрали элемент, а текущий элемент снова подошел)
+				{	
+					(*last_second)->next = (*head_first);
+					(*last_second) = (*head_first);
+					(*head_first) = (*head_first)->next;
+					prev_first_list = cur_first_list;
+					cur_first_list = cur_first_list->next;
+					(*last_second)->next = NULL;
+				}
+				
+			}
+			else
+			{
+				if ((*head_second) == NULL) // создаем первый элемент второго списка
+				{	
+					(*head_second) = cur_first_list;
+					(*last_second) = cur_first_list;
+					prev_first_list->next = cur_first_list->next;
+					cur_first_list = cur_first_list->next;
+					(*head_second)->next = NULL;
+				}
+				else // добавляем уже к существующему элементу во второй список
+				{	
+					(*last_second)->next = cur_first_list;
+					(*last_second) = cur_first_list;
+					prev_first_list->next = cur_first_list->next;
+					cur_first_list = cur_first_list->next;
+					(*last_second)->next = NULL;
+				}
+			}
 		}
-		cur = cur->next;
+		else
+		{	
+			prev_first_list = cur_first_list;
+			cur_first_list = cur_first_list->next;
+			
+		}
 	}
 }
 
@@ -116,17 +166,22 @@ int main()
 	setlocale(0, "");
 	struct list* head_first, * last_first, *head_second, *last_second;
 	head_first = last_first = head_second = last_second = NULL;
-	int cnt_elems = 0;
 	
 	
-	if (!input_list(&head_first, &last_first, &cnt_elems)) // ошибка выделения памяти возникла
+	if (!input_list(&head_first, &last_first)) // ошибка выделения памяти возникла
 	{
 		return 0;
 	}
 
+	printf("\nПервый список до изменений: ");
 	print_list(&head_first);
-	write_elems_new_list(&head_first, &head_second, &last_second, cnt_elems);
-	clear_list(&head_first, &last_first);
+	write_elems_new_list(&head_first, &head_second, &last_second);
+	printf("\n\nПервый список после изменений: ");
+	print_list(&head_first);
+	printf("\n\nВторой список: ");
+	print_list(&head_second);
 
+	clear_list(&head_first, &last_first);
+	clear_list(&head_second, &last_second);
 	return 0;
 }
