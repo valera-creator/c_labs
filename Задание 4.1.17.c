@@ -92,7 +92,7 @@ int write_elems_new_list(struct list** head_first, struct list** head_second, st
 
 	while (cur_first_list != NULL)
 	{
-		cur_num_elems ++;
+		cur_num_elems++;
 		if (cur_first_list->inf > cur_num_elems)
 		{
 			if (cur_first_list == (*head_first)) // если самый первый элемент из первого списка подошел
@@ -163,10 +163,10 @@ void clear_list(struct list** head, struct list** last)
 
 int main()
 {
-	setlocale(0, "");
 	struct list* head_first, * last_first, * head_second, * last_second;
 	head_first = last_first = head_second = last_second = NULL;
 
+	setlocale(0, "");
 
 	if (!input_list(&head_first, &last_first)) // ошибка выделения памяти возникла
 	{
@@ -182,7 +182,7 @@ int main()
 		printf("\nПервый список после изменений: ");
 		print_list(&head_first);
 	}
-	
+
 	printf("\nВторой список: ");
 	print_list(&head_second);
 
