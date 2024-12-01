@@ -5,6 +5,7 @@
 
 int input_str(int* cnt_words, char str[][ALL_BOOKS], char *end_symbol)
 {
+    // функция вернет 1, если был корректный ввод, иначе 0
     int index_i = 0, index_j = 0;
     char buf;
 
@@ -125,6 +126,12 @@ int main()
     if (!input_str(&cnt_words, str, &end_symbol))
         return 0;
 
+    if (cnt_words == 0)
+    {
+        printf("Было введено пустое предложение");
+        return 0;
+    }
+        
     print_str(cnt_words, str, end_symbol);
     check_books(str, cnt_words);
 
