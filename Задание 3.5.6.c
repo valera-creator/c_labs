@@ -4,19 +4,20 @@
 #define ALL_BOOKS 20 + 1 // берем еще 1 символ на '\0'
 
 
-int input_str(int* cnt_words, char str[][ALL_BOOKS], char *end_symbol)
+int input_str(int* cnt_words, char str[][ALL_BOOKS], char* end_symbol)
 {
     // функция вернет 1, если был корректный ввод, иначе 0
     int index_i = 0, index_j = 0;
     char buf;
 
+    printf("Введите предложение, оканчивающиеся '!', '?', '.'\n");
     scanf_s("%c", &buf);
     while (1)
     {
         while (('a' <= buf && buf <= 'z') || ('A' <= buf && buf <= 'Z'))
-        {   
+        {
             // проверка на превышение букв в слове
-            if (index_j >= ALL_BOOKS - 1) 
+            if (index_j >= ALL_BOOKS - 1)
             {
                 printf("Ошибка: Число букв превысило допустимое значение %d", ALL_BOOKS - 1);
                 return 0;
@@ -29,7 +30,7 @@ int input_str(int* cnt_words, char str[][ALL_BOOKS], char *end_symbol)
         }
 
         // Если не буква
-        if (index_j > 0) 
+        if (index_j > 0)
         {
             str[index_i][index_j] = '\0';
             index_j = 0;
@@ -46,13 +47,13 @@ int input_str(int* cnt_words, char str[][ALL_BOOKS], char *end_symbol)
 
         // Пропускаем пробелы
         while (buf == ' ')
-        {   
+        {
             scanf_s("%c", &buf);
         }
 
         // Конец строки
         if (buf == '.' || buf == '!' || buf == '?')
-        {   
+        {
             (*end_symbol) = buf;
             return;
         }
@@ -72,12 +73,12 @@ int input_str(int* cnt_words, char str[][ALL_BOOKS], char *end_symbol)
 
 
 void print_str(int cnt_words, const char str[][ALL_BOOKS], char end_symbol)
-{   
+{
     // функция выводит слова, последнее слово она выводит без пробела для приклеивания точки в конец предложения
     int i;
     printf("Введенный текст с преобразованием удаления лишних пробелов между словами: ");
     for (i = 0; i < cnt_words; i++)
-    {   
+    {
         if (i == cnt_words - 1)
             printf("%s", str[i]);
         else
@@ -89,7 +90,7 @@ void print_str(int cnt_words, const char str[][ALL_BOOKS], char end_symbol)
 
 
 void check_books(const char str[][ALL_BOOKS], int cnt_words)
-{   
+{
     // функция ведет подсчет букв пословно в предложении
     char cur_symbol = 'a';
     int cnt_books = 0, i = 0;
@@ -135,7 +136,7 @@ int main()
         printf("Было введено пустое предложение");
         return 0;
     }
-        
+
     print_str(cnt_words, str, end_symbol);
     check_books(str, cnt_words);
 
