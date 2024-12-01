@@ -3,6 +3,7 @@
 #define ALL_WORDS 30 
 #define ALL_BOOKS 20 + 1 // берем еще 1 символ на '\0'
 
+
 int input_str(int* cnt_words, char str[][ALL_BOOKS], char *end_symbol)
 {
     // функция вернет 1, если был корректный ввод, иначе 0
@@ -69,8 +70,10 @@ int input_str(int* cnt_words, char str[][ALL_BOOKS], char *end_symbol)
     return 1;
 }
 
+
 void print_str(int cnt_words, const char str[][ALL_BOOKS], char end_symbol)
-{
+{   
+    // функция выводит слова, последнее слово она выводит без пробела для приклеивания точки в конец предложения
     int i;
     printf("Введенный текст с преобразованием удаления лишних пробелов между словами: ");
     for (i = 0; i < cnt_words; i++)
@@ -87,6 +90,7 @@ void print_str(int cnt_words, const char str[][ALL_BOOKS], char end_symbol)
 
 void check_books(const char str[][ALL_BOOKS], int cnt_words)
 {   
+    // функция ведет подсчет букв пословно в предложении
     char cur_symbol = 'a';
     int cnt_books = 0, i = 0;
     printf("Пословный подсчет букв в предложении:\n");
@@ -105,7 +109,7 @@ void check_books(const char str[][ALL_BOOKS], int cnt_words)
 
 
 int check_book_in_word(const char str[ALL_BOOKS], char symbol)
-{   
+{   // функция проверяет, есть ли в слове символ, не учитывая регистр
     int i;
     for (i = 0; str[i] != '\0'; i++)
     {
