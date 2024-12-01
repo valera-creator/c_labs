@@ -80,6 +80,38 @@ void print_str(int cnt_words, const char str[][ALL_BOOKS], char end_symbol)
             printf("%s ", str[i]);
     }
     printf("%c\n", end_symbol);
+    return;
+}
+
+
+void check_books(const char str[][ALL_BOOKS], int cnt_words)
+{   
+    char cur_symbol = 'a';
+    int cnt_books = 0, i = 0;
+    printf("Пословный подсчет букв в предложении:\n");
+    for (cur_symbol; cur_symbol != 'z' + 1; cur_symbol = cur_symbol + 1)
+    {
+        for (i = 0; i < cnt_words; i++)
+        {
+            if (check_book_in_word(str[i], cur_symbol))
+                cnt_books += 1;
+        }
+        printf("'%c' = %d\n", cur_symbol, cnt_books);
+        cnt_books = 0;
+    }
+    return;
+}
+
+
+int check_book_in_word(const char str[ALL_BOOKS], char symbol)
+{   
+    int i;
+    for (i = 0; str[i] != '\0'; i++)
+    {
+        if (str[i] == symbol || str[i] == symbol - 32)
+            return 1;
+    }
+    return 0;
 }
 
 
@@ -94,5 +126,7 @@ int main()
         return 0;
 
     print_str(cnt_words, str, end_symbol);
+    check_books(str, cnt_words);
+
     return 0;
 }
